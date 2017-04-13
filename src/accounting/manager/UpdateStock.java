@@ -5,9 +5,12 @@
  */
 package accounting.manager;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.event.DocumentEvent;
@@ -22,15 +25,24 @@ public class UpdateStock extends javax.swing.JFrame {
     private String[] defaultValues ;
     private Connection conn;
     private PreparedStatement stmt;
-    public UpdateStock() {
+    //JFrame parent;
+    public UpdateStock(MainPage f) {
+        //parent = f;
         addValues();
         initComponents();
         setLocationRelativeTo(null);
+         addWindowListener(new WindowAdapter()
+            {
+                public void windowClosing(WindowEvent e)
+                {
+                   f.enableMe();
+                }
+            });
         //setLocationRelativeTo(null);
         addFilter();
         
         try{
-            ConnectionObject.myConn.openConnection();
+           // ConnectionObject.myConn.openConnection();
             conn = ConnectionObject.myConn.getConnection();
             stmt = conn.prepareStatement("update Stock set price = ? , quantity = ? where itemName = ?");
         }catch(Exception e){
@@ -48,17 +60,15 @@ public class UpdateStock extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         name = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioP = new javax.swing.JRadioButton();
+        radioL = new javax.swing.JRadioButton();
         amt = new javax.swing.JTextField();
-        back = new javax.swing.JLabel();
         done = new javax.swing.JButton();
         addMore = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         priceFrame = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
-        select = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -77,17 +87,17 @@ public class UpdateStock extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setText("pieces");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        radioP.setText("pieces");
+        radioP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                radioPActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("length");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        radioL.setText("length");
+        radioL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                radioLActionPerformed(evt);
             }
         });
 
@@ -96,9 +106,6 @@ public class UpdateStock extends javax.swing.JFrame {
                 amtActionPerformed(evt);
             }
         });
-
-        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/extras/back_1.png"))); // NOI18N
-        back.setText("jLabel4");
 
         done.setText("Done");
         done.addActionListener(new java.awt.event.ActionListener() {
@@ -127,6 +134,11 @@ public class UpdateStock extends javax.swing.JFrame {
 
         jList1.setModel(createDefaultListModel());
         jList1.setVisibleRowCount(4);
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jList1ValueChanged(evt);
@@ -134,45 +146,34 @@ public class UpdateStock extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
-        select.setText("select");
-        select.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(name)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(name)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(priceFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(addMore)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(done))
-                                .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(select, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(radioP)
+                    .addComponent(radioL))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(addMore)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(done))
+                        .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(126, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -180,9 +181,7 @@ public class UpdateStock extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(49, 49, 49)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,9 +195,9 @@ public class UpdateStock extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(radioP)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2))
+                                .addComponent(radioL))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(priceFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -210,9 +209,7 @@ public class UpdateStock extends javax.swing.JFrame {
                         .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(select)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
         pack();
@@ -222,20 +219,32 @@ public class UpdateStock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void radioPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_radioPActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void radioLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioLActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_radioLActionPerformed
 
     private void amtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_amtActionPerformed
 
     private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
-        // TODO add your handling code here:
+        try{
+           String itemName = name.getText();
+           float qty = Float.parseFloat(amt.getText());
+           float price = Float.parseFloat(priceFrame.getText());
+           updateItem(itemName, price, qty);
+           //ConnectionObject.myConn.closeConnection();
+           conn = null;//.close();
+           this.dispose();
+        }
+        catch(Exception e){
+            // went wrong
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_doneActionPerformed
 
     private void addMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMoreActionPerformed
@@ -260,11 +269,9 @@ public class UpdateStock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jList1ValueChanged
 
-    private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
-        String selected;
-        selected = jList1.getSelectedValue().toString();
-        name.setText(selected);
-    }//GEN-LAST:event_selectActionPerformed
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        name.setText(jList1.getSelectedValue().toString());
+    }//GEN-LAST:event_jList1MouseClicked
 
     private void addFilter(){
         name.getDocument().addDocumentListener( new DocumentListener(){
@@ -303,19 +310,17 @@ public class UpdateStock extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addMore;
     private javax.swing.JTextField amt;
-    private javax.swing.JLabel back;
     private javax.swing.JButton done;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JList jList1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField name;
     private javax.swing.JTextField priceFrame;
-    private javax.swing.JButton select;
+    private javax.swing.JRadioButton radioL;
+    private javax.swing.JRadioButton radioP;
     // End of variables declaration//GEN-END:variables
 
     private void addValues() {
@@ -327,6 +332,10 @@ public class UpdateStock extends javax.swing.JFrame {
     }
 
     private void updateItem(String itemName, float price, float qty) {
+        if(qty <=0){
+               JOptionPane.showMessageDialog(this,"Illegal quantity");
+               return ;
+           }
         float oldQty = getQtyIndex(itemName);
         try{
            stmt.setFloat(1, price);
@@ -344,6 +353,8 @@ public class UpdateStock extends javax.swing.JFrame {
         name.setText("");
         priceFrame.setText("");
         amt.setText("");
+        radioL.setSelected(false);
+        radioP.setSelected(false);
         JOptionPane.showMessageDialog(this,"Item Sucessfully updated" );
     }
 
@@ -354,4 +365,6 @@ public class UpdateStock extends javax.swing.JFrame {
         }
         return 0;
     }
+    
+    
 }

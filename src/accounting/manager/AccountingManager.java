@@ -14,10 +14,12 @@ import javax.swing.JOptionPane;
  */
 public class AccountingManager {
 
+    //static MainPage mainFrame;
     Connection conn;
-    AddNewStock add;
+    //AddNewStock add;
     MainPage mainFrame;
     private  void createConnection() {
+       
         try{
             connector = new MyConnection();
             connector.openConnection();
@@ -33,11 +35,14 @@ public class AccountingManager {
     
     public static void main(String[] args) {
         AccountingManager driverObject = new AccountingManager();
+        
        // driverObject.createConnection();
         driverObject.mainFrame = new MainPage();
         driverObject.mainFrame.setVisible(true);
+       // mainFrame.setEnabled(false);
        
        
     }
+   
     
 }
