@@ -24,7 +24,7 @@ public class UpdateStock extends javax.swing.JFrame {
 
     private String[] defaultValues ;
     private Connection conn;
-    private PreparedStatement stmt;
+    private PreparedStatement stmt, del, delp;
     //JFrame parent;
     public UpdateStock(MainPage f) {
         //parent = f;
@@ -45,6 +45,8 @@ public class UpdateStock extends javax.swing.JFrame {
            // ConnectionObject.myConn.openConnection();
             conn = ConnectionObject.myConn.getConnection();
             stmt = conn.prepareStatement("update Stock set price = ? , quantity = ? where itemName = ?");
+            del = conn.prepareStatement("delete from stock where itemName = ?");
+            delp = conn.prepareStatement("delete from profittable where itemName = ?");
         }catch(Exception e){
             System.out.println("bug in add stock");
             e.printStackTrace();
@@ -63,12 +65,12 @@ public class UpdateStock extends javax.swing.JFrame {
         radioP = new javax.swing.JRadioButton();
         radioL = new javax.swing.JRadioButton();
         amt = new javax.swing.JTextField();
-        done = new javax.swing.JButton();
         addMore = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         priceFrame = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
+        deleteItem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -107,13 +109,6 @@ public class UpdateStock extends javax.swing.JFrame {
             }
         });
 
-        done.setText("Done");
-        done.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doneActionPerformed(evt);
-            }
-        });
-
         addMore.setText("Update More");
         addMore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,6 +141,13 @@ public class UpdateStock extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
+        deleteItem.setText("Delete Item");
+        deleteItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteItemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,14 +168,13 @@ public class UpdateStock extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(priceFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(addMore)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(done))
-                        .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(deleteItem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addMore))
+                    .addComponent(amt, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(126, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -201,10 +202,10 @@ public class UpdateStock extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(priceFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(24, 24, 24)
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addMore)
-                            .addComponent(done)))
+                            .addComponent(deleteItem)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -231,22 +232,6 @@ public class UpdateStock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_amtActionPerformed
 
-    private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
-        try{
-           String itemName = name.getText();
-           float qty = Float.parseFloat(amt.getText());
-           float price = Float.parseFloat(priceFrame.getText());
-           updateItem(itemName, price, qty);
-           //ConnectionObject.myConn.closeConnection();
-           conn = null;//.close();
-           this.dispose();
-        }
-        catch(Exception e){
-            // went wrong
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_doneActionPerformed
-
     private void addMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMoreActionPerformed
       try{
            String itemName = name.getText();
@@ -272,6 +257,26 @@ public class UpdateStock extends javax.swing.JFrame {
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
         name.setText(jList1.getSelectedValue().toString());
     }//GEN-LAST:event_jList1MouseClicked
+
+    private void deleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemActionPerformed
+        try{
+            String item = name.getText();
+            del.setString(1, item);
+            delp.setString(1, item);
+            int r1 = del.executeUpdate();
+            int r2 = delp.executeUpdate();
+            if(r1 == 0 || r2 == 0){
+                JOptionPane.showMessageDialog(this,"Item already deleted\nTry refreshing the list from main page.");
+                clearAllFeild();
+                return ;
+            }
+            clearAllFeild();
+            JOptionPane.showMessageDialog(this,"Item successfully removed");
+        }catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Something went wrong!!\nTry refreshing the list from main page.");
+        }
+    }//GEN-LAST:event_deleteItemActionPerformed
 
     private void addFilter(){
         name.getDocument().addDocumentListener( new DocumentListener(){
@@ -310,7 +315,7 @@ public class UpdateStock extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addMore;
     private javax.swing.JTextField amt;
-    private javax.swing.JButton done;
+    private javax.swing.JButton deleteItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -344,6 +349,7 @@ public class UpdateStock extends javax.swing.JFrame {
            
            stmt.executeUpdate();
            clearAllFeild();
+           JOptionPane.showMessageDialog(this,"Item Sucessfully updated" );
        }catch(Exception e){
            System.out.println("bug 2");
        }
@@ -355,7 +361,7 @@ public class UpdateStock extends javax.swing.JFrame {
         amt.setText("");
         radioL.setSelected(false);
         radioP.setSelected(false);
-        JOptionPane.showMessageDialog(this,"Item Sucessfully updated" );
+        
     }
 
     private float getQtyIndex(String itemName) {

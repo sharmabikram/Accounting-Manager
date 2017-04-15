@@ -63,7 +63,6 @@ public class AddNewStock extends javax.swing.JFrame {
         radioP = new javax.swing.JRadioButton();
         radioL = new javax.swing.JRadioButton();
         amt = new javax.swing.JTextField();
-        done = new javax.swing.JButton();
         addMore = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         costPrice = new javax.swing.JTextField();
@@ -107,13 +106,6 @@ public class AddNewStock extends javax.swing.JFrame {
             }
         });
 
-        done.setText("Done Adding");
-        done.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doneActionPerformed(evt);
-            }
-        });
-
         addMore.setText("Add More");
         addMore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,9 +145,7 @@ public class AddNewStock extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(done, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addMore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(addMore, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(68, 68, 68))
         );
@@ -180,11 +170,8 @@ public class AddNewStock extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(costPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addMore)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(done)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                    .addComponent(addMore))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
@@ -205,22 +192,6 @@ public class AddNewStock extends javax.swing.JFrame {
     private void amtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_amtActionPerformed
-
-    private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
-        try{
-           itemName = name.getText();
-           qty = Float.parseFloat(amt.getText());
-           price = Float.parseFloat(costPrice.getText());
-           addItem(itemName, price, qty);
-           //ConnectionObject.myConn.closeConnection();
-           conn = null;//.close();
-           this.dispose();
-        }
-        catch(Exception e){
-            // went wrong
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_doneActionPerformed
 
     private void addMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMoreActionPerformed
 
@@ -247,7 +218,6 @@ public class AddNewStock extends javax.swing.JFrame {
     private javax.swing.JTextField amt;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField costPrice;
-    private javax.swing.JButton done;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

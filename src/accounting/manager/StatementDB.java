@@ -8,6 +8,7 @@ package accounting.manager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,10 +28,15 @@ public class StatementDB extends javax.swing.JFrame {
     Connection conn;
     ResultSet rs;
     JFrame parent;
+    Statement curMnthStmt;
+    
     public StatementDB(MainPage f) {
+        
         parent =f;
         initComponents();
+         updateLabelCurrMonth();
         setLocationRelativeTo(null);
+        
          addWindowListener(new WindowAdapter()
             {
                 public void windowClosing(WindowEvent e)
@@ -55,6 +61,7 @@ public class StatementDB extends javax.swing.JFrame {
         profitTable.getColumnModel().getColumn(2).setMinWidth(70);
         
         updateTable();
+       
     }
 
     /**
@@ -69,6 +76,11 @@ public class StatementDB extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         profitTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        pushProfit = new javax.swing.JButton();
+        currMonthLabel = new javax.swing.JLabel();
+        monthBox = new javax.swing.JComboBox();
+        profitMonthWise = new javax.swing.JButton();
+        showing = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -85,34 +97,78 @@ public class StatementDB extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(profitTable);
 
-        jButton1.setText("Reresh");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/extras/refresh.jpeg"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        pushProfit.setText("Push");
+        pushProfit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pushProfitActionPerformed(evt);
+            }
+        });
+
+        currMonthLabel.setText("jLabel1");
+
+        monthBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "JAN", "FEB", "MARCH", "APR", "MAY", "JUN", "JULY", "AUG", "SEPT", "OCT", "NOV", "DEC", " " }));
+
+        profitMonthWise.setText("go");
+        profitMonthWise.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profitMonthWiseActionPerformed(evt);
+            }
+        });
+
+        showing.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(172, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(23, 23, 23))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(showing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                    .addComponent(currMonthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(monthBox, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(profitMonthWise)
+                        .addGap(38, 38, 38))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(pushProfit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(17, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(currMonthLabel))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(monthBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(profitMonthWise)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pushProfit))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(showing, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -122,15 +178,93 @@ public class StatementDB extends javax.swing.JFrame {
         updateTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void pushProfitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pushProfitActionPerformed
+        String currMonth = currMonthLabel.getText();
+         String name;
+        float profit;
+        PreparedStatement  upload;
+        Statement fetch;
+        ResultSet rs;
+       
+        try{
+            conn = ConnectionObject.myConn.getConnection();
+            fetch = conn.createStatement();
+            upload = conn.prepareStatement("insert into profitMonth VALUES(?, ?, ?)");
+            
+            rs = fetch.executeQuery("Select * from  profitTable");
+            while(rs.next()){
+              name = rs.getString("ItemName");
+              profit = rs.getFloat("profit");
+              
+              if(profit > 0){
+              upload.setString(1, name);
+              upload.setFloat(2, profit);
+              upload.setString(3, currMonth);
+              upload.execute();
+              }
+            }
+            upload = null;
+            upload = conn.prepareStatement("update profitTable set profit = ?");
+            upload.setFloat(1, 0);
+            upload.executeUpdate();
+          updateMonth(currMonth);
+          
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            conn = null;
+            updateLabelCurrMonth();
+            updateTable();
+        }
+        
+    }//GEN-LAST:event_pushProfitActionPerformed
+
+    private void profitMonthWiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profitMonthWiseActionPerformed
+        String reqMonth = monthBox.getSelectedItem().toString();
+        PreparedStatement st;
+        try {
+            showing.setText("Showing the result for "+reqMonth);
+            showing.setVisible(true);
+            String item;
+            float profit;
+            conn = ConnectionObject.myConn.getConnection();
+            st = conn.prepareStatement("Select itemName, profit from profitMonth where month =? ");
+            st.setString(1, reqMonth);
+            DefaultTableModel addRow =  (DefaultTableModel)profitTable.getModel();
+            addRow.setRowCount(itemCount);
+            rs = st.executeQuery();
+            while(rs.next()){
+                item = rs.getString("itemName");
+                profit = rs.getFloat("profit");
+                addRow.addRow(new Object[] {itemCount+1, item, profit});
+                itemCount++;
+            }
+        } catch (SQLException ex) {
+            System.out.println("month wise");
+            ex.printStackTrace();
+            Logger.getLogger(StatementDB.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            itemCount = 0;
+            conn = null;
+        }
+        
+    }//GEN-LAST:event_profitMonthWiseActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel currMonthLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox monthBox;
+    private javax.swing.JButton profitMonthWise;
     private javax.swing.JTable profitTable;
+    private javax.swing.JButton pushProfit;
+    private javax.swing.JLabel showing;
     // End of variables declaration//GEN-END:variables
 
     private void updateTable() {
         try {
+            showing.setVisible(false);
             String item;
             float profit;
             conn = ConnectionObject.myConn.getConnection();
@@ -153,6 +287,37 @@ public class StatementDB extends javax.swing.JFrame {
             itemCount = 0;
             conn = null;
         }
+    }
+
+    private void updateLabelCurrMonth() {
+        String label = "OOps Error";
+        try{
+            conn = ConnectionObject.myConn.getConnection();
+            curMnthStmt = conn.createStatement();
+            ResultSet rs = curMnthStmt.executeQuery("select * from currMonth");
+            if(rs.next()){
+                label = rs.getString(1);
+            }
+            currMonthLabel.setText(label);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            conn = null;
+        }
+    }
+
+    private void updateMonth(String currMonth) throws SQLException {
+        PreparedStatement update = conn.prepareStatement("update currMonth set month = ?");
+        String nowMonth = "JAN";
+        for(int i =0; i<Month.month.length; ++i){
+            if(currMonth.equalsIgnoreCase(Month.month[i])){
+                nowMonth = Month.month[(i+1)%12];
+                break;
+            }
+        }
+        update.setString(1, nowMonth);
+        update.execute();
     }
     
     

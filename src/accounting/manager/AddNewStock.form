@@ -49,10 +49,7 @@
                   <Group type="102" attributes="0">
                       <Component id="amt" min="-2" pref="85" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="done" max="32767" attributes="0"/>
-                          <Component id="addMore" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="addMore" min="-2" pref="93" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabel3" min="-2" pref="99" max="-2" attributes="0"/>
               </Group>
@@ -85,13 +82,9 @@
                           <Component id="costPrice" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="addMore" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="done" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="addMore" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="60" max="32767" attributes="0"/>
+              <EmptySpace pref="66" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -151,14 +144,6 @@
     <Component class="javax.swing.JTextField" name="amt">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="amtActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="done">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Done Adding"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="doneActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="addMore">

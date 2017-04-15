@@ -19,7 +19,7 @@ public class MyConnection {
        JDBC_DRIVER = "com.mysql.jdbc.Driver";
        dbURL = "jdbc:mysql://localhost/rks";
        user = "root";
-       password = "bikram";
+       password = "bhalu";
        conn = null;
    }
    
