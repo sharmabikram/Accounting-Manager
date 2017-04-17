@@ -10,7 +10,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javafx.scene.paint.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +28,8 @@ public class AddNewStock extends javax.swing.JFrame {
     MainPage parent;
     public AddNewStock(MainPage parent) {
         this.parent = parent;
+        //getContentPane().setBackground(java.awt.Color.MAGENTA);
+        
         initComponents();
         //setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         setLocationRelativeTo(null);
@@ -33,7 +38,7 @@ public class AddNewStock extends javax.swing.JFrame {
             //ConnectionObject.myConn.openConnection();
             conn = ConnectionObject.myConn.getConnection();
             stmt = conn.prepareStatement("insert into stock (itemName, price, quantity) values(?, ?, ?)");
-            profitStmt = conn.prepareStatement("insert into profitTable values(?, ?)");
+            profitStmt = conn.prepareStatement("insert into profitTable values(?, ?, ?)");
         }catch(Exception e){
             System.out.println("bug in add stock er");
             e.printStackTrace();
@@ -68,6 +73,10 @@ public class AddNewStock extends javax.swing.JFrame {
         costPrice = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("ADD AN ITEM");
+        setAlwaysOnTop(true);
+        setBackground(new java.awt.Color(0, 204, 204));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Item Name");
@@ -246,6 +255,7 @@ public class AddNewStock extends javax.swing.JFrame {
            
            profitStmt.setString(1, itemName);
            profitStmt.setFloat(2, 0);
+           profitStmt.setFloat(3, 0);
            profitStmt.executeUpdate();
            clearAllFeild();
        }catch(Exception e){

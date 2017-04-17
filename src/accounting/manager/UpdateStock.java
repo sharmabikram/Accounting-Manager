@@ -73,6 +73,8 @@ public class UpdateStock extends javax.swing.JFrame {
         deleteItem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("UPDATE STOCK");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Item ID");

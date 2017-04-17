@@ -6,6 +6,7 @@
 package accounting.manager;
 
 import java.sql.Connection;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,24 +19,14 @@ public class AccountingManager {
     Connection conn;
     //AddNewStock add;
     MainPage mainFrame;
-    private  void createConnection() {
-       
-        try{
-            connector = new MyConnection();
-            connector.openConnection();
-            conn = connector.getConnection();
-            System.out.println(conn.toString());
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Server Error", "Error",JOptionPane.PLAIN_MESSAGE);
-        }
-    }
     
-    MyConnection connector;
     
     public static void main(String[] args) {
         AccountingManager driverObject = new AccountingManager();
         
+        ConnectionObject.myConn.openConnection();
+        driverObject.conn = ConnectionObject.myConn.getConnection();
+        driverObject.init();
        // driverObject.createConnection();
         driverObject.mainFrame = new MainPage();
         driverObject.mainFrame.setVisible(true);
@@ -43,6 +34,26 @@ public class AccountingManager {
        
        
     }
+
+    private void init() {
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.execute("create database if not exists ramkumar");
+            ConnectionObject.myConn.closeConnection();
+            
+            ConnectionObject.myConn.changeURL("jdbc:mysql://localhost/ramkumar");
+            ConnectionObject.myConn.openConnection();
+            conn = ConnectionObject.myConn.getConnection();
+            stmt = conn.createStatement();
+            stmt.execute("create table if not exists stock(id int auto_increment primary key, itemName varchar(20), price float, quantity float)");
+            stmt.execute("create table if not exists profitTable(itemName varchar(20), profit float, qty_sold float)");
+            stmt.execute("create table if not exists profitMonth(itemName varchar(20), profit float, month char(5), year int, qty_sold float)");
+            stmt.execute("create table if not exists currMonth(month char(5), year int)");
+            stmt.execute("insert into currMonth values('JAN', 2017)");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+     }
    
     
 }

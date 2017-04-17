@@ -4,9 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/lenovo/Documents/NetBeansProjects/Accounting%20Manager/src/accounting/manager/MainPage.java</file>
+            <file>file:/C:/Users/lenovo/Documents/NetBeansProjects/Accounting%20Manager/src/staffManagement/staffEntry.java</file>
+            <file>file:/C:/Users/lenovo/Documents/NetBeansProjects/Accounting%20Manager/src/accounting/manager/AccountingManager.java</file>
             <file>file:/C:/Users/lenovo/Documents/NetBeansProjects/Accounting%20Manager/src/accounting/manager/MyConnection.java</file>
             <file>file:/C:/Users/lenovo/Documents/NetBeansProjects/Accounting%20Manager/src/accounting/manager/UpdateStock.java</file>
-            <file>file:/C:/Users/lenovo/Documents/NetBeansProjects/Accounting%20Manager/src/accounting/manager/AddNewStock.java</file>
+            <file>file:/C:/Users/lenovo/Documents/NetBeansProjects/Accounting%20Manager/src/accounting/manager/ConnectionObject.java</file>
         </group>
     </open-files>
 </project-private>

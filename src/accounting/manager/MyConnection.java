@@ -17,7 +17,7 @@ public class MyConnection {
    
    public MyConnection(){
        JDBC_DRIVER = "com.mysql.jdbc.Driver";
-       dbURL = "jdbc:mysql://localhost/rks";
+       dbURL = "jdbc:mysql://localhost";
        user = "root";
        password = "bhalu";
        conn = null;
@@ -47,5 +47,8 @@ public class MyConnection {
    
    public Connection getConnection(){
        return conn;
+   }
+   public void changeURL(String url){
+       dbURL = url;
    }
 }
