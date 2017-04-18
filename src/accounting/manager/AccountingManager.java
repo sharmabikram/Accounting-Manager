@@ -6,8 +6,10 @@
 package accounting.manager;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import staffManagement.staffEntry;
 
 /**
  *
@@ -19,7 +21,7 @@ public class AccountingManager {
     Connection conn;
     //AddNewStock add;
     MainPage mainFrame;
-    
+    staffEntry s;
     
     public static void main(String[] args) {
         AccountingManager driverObject = new AccountingManager();
@@ -31,7 +33,8 @@ public class AccountingManager {
         driverObject.mainFrame = new MainPage();
         driverObject.mainFrame.setVisible(true);
        // mainFrame.setEnabled(false);
-       
+      // driverObject.s = new staffEntry();
+       //driverObject.s.setVisible(true);
        
     }
 
@@ -48,8 +51,15 @@ public class AccountingManager {
             stmt.execute("create table if not exists stock(id int auto_increment primary key, itemName varchar(20), price float, quantity float)");
             stmt.execute("create table if not exists profitTable(itemName varchar(20), profit float, qty_sold float)");
             stmt.execute("create table if not exists profitMonth(itemName varchar(20), profit float, month char(5), year int, qty_sold float)");
-            stmt.execute("create table if not exists currMonth(month char(5), year int)");
-            stmt.execute("insert into currMonth values('JAN', 2017)");
+            stmt.execute("create table if not exists currMonth(month char(5), curyear int)");
+            ResultSet rs = stmt.executeQuery("select * from currMonth");
+            if(!rs.next()){
+                stmt.execute("insert into currMonth values('JAN', 2017)");
+            }
+            
+            stmt.execute("CREATE TABLE if not EXISTS staffDetail(sname varchar(20), phone char(11), rateh float, ratef float, address varchar(70), amtDue float)");
+            stmt.execute("CREATE TABLE if not EXISTS moneydetail (sname varchar(20), amount float, tarik dateTime)");
+            //stmt.execute
         }catch(Exception e){
             e.printStackTrace();
         }

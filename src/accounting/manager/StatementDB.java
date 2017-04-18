@@ -406,5 +406,4 @@ public class StatementDB extends javax.swing.JFrame {
         update.execute();
     }
     
-    
 }
