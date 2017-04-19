@@ -51,12 +51,13 @@ public class AccountingManager {
             stmt.execute("create table if not exists stock(id int auto_increment primary key, itemName varchar(20), price float, quantity float)");
             stmt.execute("create table if not exists profitTable(itemName varchar(20), profit float, qty_sold float)");
             stmt.execute("create table if not exists profitMonth(itemName varchar(20), profit float, month char(5), year int, qty_sold float)");
-            stmt.execute("create table if not exists currMonth(month char(5), curyear int)");
+            stmt.execute("create table if not exists currMonth(month char(5), curyear int, netSell float)");
             ResultSet rs = stmt.executeQuery("select * from currMonth");
             if(!rs.next()){
-                stmt.execute("insert into currMonth values('JAN', 2017)");
+                stmt.execute("insert into currMonth values('JAN', 2017, 0)");
             }
             
+            stmt.execute("create table if not exists sell(month char(5), year int, selling float)");
             stmt.execute("CREATE TABLE if not EXISTS staffDetail(sname varchar(20), phone char(11), rateh float, ratef float, address varchar(70), amtDue float)");
             stmt.execute("CREATE TABLE if not EXISTS moneydetail (sname varchar(20), amount float, tarik dateTime)");
             //stmt.execute

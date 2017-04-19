@@ -39,8 +39,9 @@ public class StaffMain extends javax.swing.JFrame {
     int staffCount = 0;
     Statement stmt , attend;
     Connection conn;
-    PreparedStatement updateAmt, money;
-    
+    PreparedStatement updateAmt, money, remove;
+    String gName;
+    float gAmt;
     public StaffMain(MainPage parent) {
         
         
@@ -50,11 +51,12 @@ public class StaffMain extends javax.swing.JFrame {
             updateAmt = conn.prepareStatement("update staffdetail set amtDue = ? where sname = ?");
             money = conn.prepareStatement("insert into moneydetail values(?, ?, CURDATE())");
             attend = conn.createStatement();
+            remove = conn.prepareStatement("DELETE from staffdetail where sname = ?");
             getDetails();
         }catch(Exception e){
             e.printStackTrace();
         }
-        setContentPane(new JLabel(new ImageIcon(getClass().getResource("/extras/logStaff.jpg"))));
+        setContentPane(new JLabel(new ImageIcon(getClass().getResource("/extras/slog.jpg"))));
         initComponents();
         setLocationRelativeTo(null);
         
@@ -98,8 +100,12 @@ public class StaffMain extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         full = new javax.swing.JButton();
         dateFrame = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(null);
 
         jButton1.setText("Add a new Staff");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +139,7 @@ public class StaffMain extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
-        jButton5.setText("Update Staff Details");
+        jButton5.setText("Get Staff Details");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -158,6 +164,27 @@ public class StaffMain extends javax.swing.JFrame {
 
         dateFrame.setText("Date");
 
+        jButton4.setText("Payment history");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("Remove Staff");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Get Staff Attendence");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,7 +195,9 @@ public class StaffMain extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(98, 98, 98)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -181,53 +210,62 @@ public class StaffMain extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(full, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(half, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(half, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(amountFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(amountFrame)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(dateFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(dateFrame)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(14, 14, 14)
-                                .addComponent(jButton1))
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(53, 53, 53)
                                 .addComponent(jLabel2)
                                 .addGap(9, 9, 9)
                                 .addComponent(amountFrame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3))
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nameFrame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton7)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(full)
                     .addComponent(half))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
@@ -265,12 +303,20 @@ public class StaffMain extends javax.swing.JFrame {
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
         nameFrame.setText(jList1.getSelectedValue().toString());
+        gName = nameFrame.getText();
+        for(int i= 0; i<staff.length; ++i){
+            if(gName.equalsIgnoreCase(staff[i].name)){
+                gAmt = staff[i].amtDue;
+                break;
+            }
+        }
+        
     }//GEN-LAST:event_jList1MouseClicked
 
     private void halfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_halfActionPerformed
         
-        String name = nameFrame.getText();
-         makeAttendence(name, 'h');
+        //String name = nameFrame.getText();
+         makeAttendence(gName, 'h');
         
     }//GEN-LAST:event_halfActionPerformed
 
@@ -281,9 +327,46 @@ public class StaffMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void fullActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullActionPerformed
-        String name = nameFrame.getText();
-        makeAttendence(name, 'f');
+        //String name = nameFrame.getText();
+        makeAttendence(gName, 'f');
     }//GEN-LAST:event_fullActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       //String name = nameFrame.getText();
+       MoneyDetail obj = new MoneyDetail(this, gName);
+       obj.setVisible(true);
+       setEnabled(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        String name = gName;
+        float amtDue= gAmt;
+        try{
+            
+            remove.setString(1, name);
+            remove.executeUpdate();
+            attend.execute("drop TABLE if EXISTS "+name);
+            JOptionPane.showMessageDialog(this, "Staff removed\n");
+            if(amtDue<0)
+                JOptionPane.showMessageDialog(this, "Receive amount "+amtDue + " from "+name);
+            else
+                JOptionPane.showMessageDialog(this, "Pay amount "+amtDue+" to "+name);
+            
+            nameFrame.setText("");
+            //refresh
+         getDetails();
+        jList1.setModel(createDefaultListModel());
+        addFilter();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        Attendence obj = new Attendence(this, gName, gAmt);
+        obj.setVisible(true);
+        setEnabled(false);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
   public void enableMe(){
         setEnabled(true);
@@ -366,7 +449,10 @@ public class StaffMain extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList jList1;

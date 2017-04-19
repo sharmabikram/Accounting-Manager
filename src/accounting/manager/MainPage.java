@@ -41,8 +41,8 @@ public class MainPage extends javax.swing.JFrame {
     float totalPayment;
     float costPrice = 0;
     private Connection conn;
-    private Statement stmt;
-    private PreparedStatement updateStatement, profitUpdate, currProfit;
+    private Statement stmt,  currSale;
+    private PreparedStatement updateStatement, profitUpdate, currProfit, currSaleUp;
     private float profit = 0;
     ResultSet result;
     int counter = 0;
@@ -64,6 +64,8 @@ public class MainPage extends javax.swing.JFrame {
             updateStatement = conn.prepareStatement("update stock set quantity = ? where itemName = ?");
             profitUpdate = conn.prepareStatement("update profitTable set profit = ? , qty_sold = ? where itemName = ?");
             currProfit = conn.prepareStatement("select profit, qty_sold from profittable where itemName = ?");
+            currSale = conn.createStatement();
+            currSaleUp = conn.prepareStatement("update currMonth set netSell = ?");
             getDetails();
             
             
@@ -664,6 +666,16 @@ public class MainPage extends javax.swing.JFrame {
             profitUpdate.setFloat(1, profit + prevProfit);
             profitUpdate.setFloat(2, prevQty+qty);
             profitUpdate.executeUpdate();
+            
+            
+            // sale
+            float prevSale=0;
+            rs = currSale.executeQuery("select netSell from currMonth");
+            if(rs.next()){
+                prevSale = rs.getFloat("netSell");
+            }
+            currSaleUp.setFloat(1, prevSale+sp);
+            currSaleUp.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -63,6 +63,8 @@ public class Stock extends javax.swing.JFrame {
 
         pane = new javax.swing.JScrollPane();
         stockTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        totalAmt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -79,21 +81,36 @@ public class Stock extends javax.swing.JFrame {
         ));
         pane.setViewportView(stockTable);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Total Value ");
+
+        totalAmt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        totalAmt.setText("amt");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pane, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(totalAmt, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pane, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addComponent(pane, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addComponent(pane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(totalAmt))
+                .addContainerGap())
         );
 
         pack();
@@ -105,13 +122,16 @@ public class Stock extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane pane;
     private javax.swing.JTable stockTable;
+    private javax.swing.JLabel totalAmt;
     // End of variables declaration//GEN-END:variables
 
     private void updateTableContent() {
         DefaultTableModel model = (DefaultTableModel)stockTable.getModel();
         int id;
+        float totalValue = 0;
         String name;
         float cost;
         float qty;
@@ -120,10 +140,10 @@ public class Stock extends javax.swing.JFrame {
             name = MainPage.items[i-1].itemName;
             cost = MainPage.items[i-1].costPrice;
             qty = MainPage.items[i-1].quantity;
-            
+            totalValue += cost*qty;
             model.addRow(new Object[] {id, name, cost, qty});
         }
-    }
-    
-    
+        
+        totalAmt.setText(Float.toString(totalValue));
+    } 
 }

@@ -29,6 +29,7 @@ public class StatementDB extends javax.swing.JFrame {
     ResultSet rs;
     JFrame parent;
     Statement curMnthStmt;
+    float netSell = 0;
     
     public StatementDB(MainPage f) {
         
@@ -87,6 +88,8 @@ public class StatementDB extends javax.swing.JFrame {
         netProfit = new javax.swing.JLabel();
         labelYear = new javax.swing.JLabel();
         yearBox = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        sellFrame = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("REPORTS");
@@ -147,24 +150,36 @@ public class StatementDB extends javax.swing.JFrame {
 
         yearBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Net Sell");
+
+        sellFrame.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        sellFrame.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(showing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(currMonthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(labelYear))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(sellFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(netProfit, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(showing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(currMonthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(labelYear))))
+                        .addComponent(netProfit, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -206,7 +221,9 @@ public class StatementDB extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(netProfit))
+                    .addComponent(netProfit)
+                    .addComponent(jLabel2)
+                    .addComponent(sellFrame))
                 .addGap(27, 27, 27))
         );
 
@@ -252,8 +269,18 @@ public class StatementDB extends javax.swing.JFrame {
             upload.setFloat(1, 0);
             upload.setFloat(2, 0);
             upload.executeUpdate();
-          updateMonth(currMonth);
           
+          
+          
+          
+          upload = null;
+          upload = conn.prepareStatement("insert into  sell values(?, ?, ?)");
+          upload.setString(1, currMonth);
+          upload.setInt(2, year);
+          upload.setFloat(3, netSell);
+          upload.executeUpdate();
+          
+          updateMonth(currMonth);
         }catch(Exception e){
             e.printStackTrace();
         }finally{
@@ -300,6 +327,15 @@ public class StatementDB extends javax.swing.JFrame {
                 addRow.addRow(new Object[] {itemCount+1, item, qty_sold, profit});
                 itemCount++;
             }
+            
+             PreparedStatement fetch = conn.prepareStatement("select selling from sell where month = ? and year = ?");
+             fetch.setString(1, reqMonth);
+             fetch.setInt(2, year);
+            rs = fetch.executeQuery();
+          if(rs.next()){
+              netSell = rs.getFloat("selling");
+          }
+          sellFrame.setText(Float.toString(netSell));
         } catch (SQLException ex) {
             System.out.println("month wise");
             ex.printStackTrace();
@@ -320,6 +356,7 @@ public class StatementDB extends javax.swing.JFrame {
     private javax.swing.JLabel currMonthLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelYear;
     private javax.swing.JComboBox monthBox;
@@ -327,6 +364,7 @@ public class StatementDB extends javax.swing.JFrame {
     private javax.swing.JButton profitMonthWise;
     private javax.swing.JTable profitTable;
     private javax.swing.JButton pushProfit;
+    private javax.swing.JLabel sellFrame;
     private javax.swing.JLabel showing;
     private javax.swing.JComboBox yearBox;
     // End of variables declaration//GEN-END:variables
@@ -358,6 +396,12 @@ public class StatementDB extends javax.swing.JFrame {
                 addRow.addRow(new Object[] {itemCount+1, item, qty_sold,profit});
                 itemCount++;
             }
+            Statement fetch = conn.createStatement();
+            rs = fetch.executeQuery("Select netSell from currMonth");
+          if(rs.next()){
+              netSell = rs.getFloat("netSell");
+          }
+          sellFrame.setText(Float.toString(netSell));
         } catch (SQLException ex) {
             System.out.println("refresh profit");
             ex.printStackTrace();
@@ -390,7 +434,7 @@ public class StatementDB extends javax.swing.JFrame {
     }
 
     private void updateMonth(String currMonth) throws SQLException {
-        PreparedStatement update = conn.prepareStatement("update currMonth set month = ? , curYear = ?");
+        PreparedStatement update = conn.prepareStatement("update currMonth set month = ? , curYear = ?, netSell = ?");
         String nowMonth = "JAN";
         int nowYear = Integer.parseInt(labelYear.getText());
         for(int i =0; i<Month.month.length; ++i){
@@ -403,6 +447,7 @@ public class StatementDB extends javax.swing.JFrame {
         }
         update.setString(1, nowMonth);
         update.setInt(2, nowYear);
+        update.setFloat(3, 0);
         update.execute();
     }
     

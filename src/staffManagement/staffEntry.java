@@ -182,7 +182,12 @@ public class staffEntry extends javax.swing.JFrame {
             hRate = Float.parseFloat(hRateFrame.getText());
             fRate = Float.parseFloat(fRateFrame.getText());
             long ph = Long.parseLong(phone); // to check for correct format
-            
+            if(phone.length() != 10 && hRate >= fRate){
+                clearAllFeilds();
+                JOptionPane.showMessageDialog(this, "Data incorrect.\n"+"Phone no must of length 10\n"+
+                        "Half rate must be less than full rate");
+                return ;
+            }
             upload.setString(1, name);
             upload.setString(2, phone);
             upload.setFloat(3, hRate);
@@ -196,6 +201,7 @@ public class staffEntry extends javax.swing.JFrame {
             //createS.setString(1, name);
             //createS.execute();
             clearAllFeilds();
+            JOptionPane.showMessageDialog(this, "Welcome Mr. "+name+ " to RKS");
         }catch(Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Some Error occured.\nTry again");
@@ -238,6 +244,6 @@ public class staffEntry extends javax.swing.JFrame {
         hRateFrame.setText("");
         fRateFrame.setText("");
         
-        JOptionPane.showMessageDialog(this, "Added a record");
+       
      }
 }
