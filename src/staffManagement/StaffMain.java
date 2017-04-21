@@ -524,7 +524,8 @@ public class StaffMain extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(StaffMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+       JOptionPane.showMessageDialog(this, "Attendence Marked");
+       nameFrame.setText("");
        
     }
 }

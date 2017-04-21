@@ -57,8 +57,13 @@ public class AccountingManager {
                 stmt.execute("insert into currMonth values('JAN', 2017, 0)");
             }
             
+            stmt.execute("create table if not exists admin(userName varchar(5), pass varchar(5))");
+            rs = stmt.executeQuery("select * from admin");
+            if(!rs.next()){
+                stmt.execute("insert into admin values('admin', 'admin')");
+            }
             stmt.execute("create table if not exists sell(month char(5), year int, selling float)");
-            stmt.execute("CREATE TABLE if not EXISTS staffDetail(sname varchar(20), phone char(11), rateh float, ratef float, address varchar(70), amtDue float)");
+            stmt.execute("CREATE TABLE if not EXISTS staffDetail(sname varchar(20), phone char(11), rateh float, ratef float, address varchar(70), amtDue float, image longblob)");
             stmt.execute("CREATE TABLE if not EXISTS moneydetail (sname varchar(20), amount float, tarik dateTime)");
             //stmt.execute
         }catch(Exception e){

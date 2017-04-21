@@ -173,7 +173,7 @@ public class Attendence extends javax.swing.JFrame {
                 date = rs.getDate("tarik");
                 type = rs.getString("type");
                 
-                addRow.addRow(new Object[]{count++, date, type});
+                addRow.addRow(new Object[]{++count, date, type});
                 
             }
         }catch(Exception e){

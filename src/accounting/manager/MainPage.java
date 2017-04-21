@@ -5,6 +5,8 @@
  */
 package accounting.manager;
 
+import MyTools.Change;
+import MyTools.Password;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
@@ -142,6 +144,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         StatementDB = new javax.swing.JMenuItem();
         checkStock = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -282,6 +285,14 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         jMenu1.add(checkStock);
+
+        jMenuItem4.setText("Change password");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
 
@@ -501,8 +512,8 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void StatementDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatementDBActionPerformed
-        StatementDB stDB = new StatementDB(this);
-        stDB.setVisible(true);
+        Password pass = new Password(this, 1);
+        pass.setVisible(true);
         setEnabled(false); 
     }//GEN-LAST:event_StatementDBActionPerformed
 
@@ -513,11 +524,17 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_checkStockActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-       StaffMain s = new StaffMain(this);
-       s.setVisible(true);
-       setVisible(false);
-       setEnabled(false);
+       Password pass = new Password(this, 2);
+        pass.setVisible(true);
+        setEnabled(false); 
+        setVisible(false);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       Change obj = new Change(this);
+       obj.setVisible(true);
+       setEnabled(false);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
      
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -540,6 +557,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

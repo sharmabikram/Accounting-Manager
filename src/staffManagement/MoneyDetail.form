@@ -152,7 +152,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="totalFrame">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel2"/>
+        <Property name="text" type="java.lang.String" value="0.0"/>
       </Properties>
     </Component>
   </SubComponents>

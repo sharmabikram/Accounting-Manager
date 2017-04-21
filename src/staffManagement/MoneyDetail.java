@@ -103,7 +103,7 @@ public class MoneyDetail extends javax.swing.JFrame {
 
         jLabel1.setText("Total Payment Made");
 
-        totalFrame.setText("jLabel2");
+        totalFrame.setText("0.0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
