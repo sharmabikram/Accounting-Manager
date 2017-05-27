@@ -87,6 +87,7 @@ public class AddNewStock extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Quantity");
 
+        name.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameActionPerformed(evt);

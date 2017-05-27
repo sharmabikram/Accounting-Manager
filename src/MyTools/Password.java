@@ -65,6 +65,7 @@ public class Password extends javax.swing.JFrame {
         passFrame = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("RKS - Sign In");
 
         jLabel1.setText("User Name");
 
@@ -74,6 +75,12 @@ public class Password extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        passFrame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passFrameActionPerformed(evt);
             }
         });
 
@@ -118,27 +125,13 @@ public class Password extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        try{
-            userName = nameFrame.getText();
-            password = new String(passFrame.getPassword());
-            auth.setString(1, userName);
-            auth.setString(2, password);
-            
-            ResultSet rs = auth.executeQuery();
-            if(rs.next()){
-                Success();
-            }
-            else{
-            JOptionPane.showMessageDialog(this, "Invalid Username or password");
-            nameFrame.setText("");
-            passFrame.setText("");
-            }
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+       pressButton();
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void passFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passFrameActionPerformed
+       pressButton();
+    }//GEN-LAST:event_passFrameActionPerformed
 
     
 
@@ -158,7 +151,31 @@ public class Password extends javax.swing.JFrame {
         else{
             StaffMain staff = new StaffMain(p);
             staff.setVisible(true);
+            p.setVisible(false);
         }
        dispose();
+    }
+
+    private void pressButton() {
+         try{
+            userName = nameFrame.getText();
+            password = new String(passFrame.getPassword());
+            auth.setString(1, userName);
+            auth.setString(2, password);
+            
+            ResultSet rs = auth.executeQuery();
+            if(rs.next()){
+                Success();
+                p.setEnabled(false);
+            }
+            else{
+            JOptionPane.showMessageDialog(this, "Invalid Username or password");
+            nameFrame.setText("");
+            passFrame.setText("");
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

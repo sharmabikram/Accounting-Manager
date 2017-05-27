@@ -164,6 +164,7 @@ public class Attendence extends javax.swing.JFrame {
         Date date;
         String type;
         DefaultTableModel addRow =  (DefaultTableModel)atable.getModel();
+        addRow.setRowCount(0);
         try{
             
             stmt.setInt(1, mnth);

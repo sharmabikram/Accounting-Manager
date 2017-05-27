@@ -53,6 +53,7 @@ public class staffEntry extends javax.swing.JFrame {
                 }
             });
         makeConnectionAndStatement();
+        photoFrame.setIcon(new ImageIcon(getClass().getResource("/extras/pass.jpg")));
        
     }
 
@@ -224,10 +225,17 @@ public class staffEntry extends javax.swing.JFrame {
             upload.setFloat(4, fRate);
             upload.setString(5, address);
             upload.setFloat(6, 0); // amt due is 0;
-            byte[] extractBytes = data.getData();
+            //byte[] extractBytes = data.getData();
             //upload.setBytes(7, extractBytes);
             //upload.setBinaryStream(7, image, image.);
-            FileInputStream fin=new FileInputStream(image.getAbsolutePath());  
+            FileInputStream fin;
+            if(image == null){
+                image = new File("C:\\Program Files\\RKS_ACC\\pass.jpg");
+                fin=new FileInputStream("C:\\Program Files\\RKS_ACC\\pass.jpg");
+            }
+           else
+            fin=new FileInputStream(image.getAbsolutePath());
+              
             upload.setBinaryStream(7, fin, fin.available());
             upload.executeUpdate();
             
@@ -237,6 +245,7 @@ public class staffEntry extends javax.swing.JFrame {
             clearAllFeilds();
             JOptionPane.showMessageDialog(this, "Welcome Mr. "+name+ " to RKS");
         }catch(Exception e){
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Some Error occured.\nTry again");
         }
     }//GEN-LAST:event_joinButtonActionPerformed
@@ -292,6 +301,7 @@ public class staffEntry extends javax.swing.JFrame {
         hRateFrame.setText("");
         fRateFrame.setText("");
         
+       photoFrame.setIcon(new ImageIcon(getClass().getResource("/extras/pass.jpg")));
        
      }
 

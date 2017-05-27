@@ -73,6 +73,12 @@ public class Change extends javax.swing.JFrame {
 
         jLabel3.setText("New Username");
 
+        passFrame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passFrameActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("New password");
 
         jButton1.setText("Change");
@@ -132,28 +138,12 @@ public class Change extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try{
-            userName = cnameFrame.getText();
-            password = new String(cpassFrame.getPassword());
-            auth.setString(1, userName);
-            auth.setString(2, password);
-            
-            ResultSet rs = auth.executeQuery();
-            if(rs.next()){
-                Success();
-            }
-            else{
-            JOptionPane.showMessageDialog(this, "Invalid Username or password");
-            nameFrame.setText("");
-            passFrame.setText("");
-            cnameFrame.setText("");
-            cpassFrame.setText("");
-            }
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        pressButton();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void passFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passFrameActionPerformed
+        pressButton();
+    }//GEN-LAST:event_passFrameActionPerformed
 
    
 
@@ -180,6 +170,30 @@ public class Change extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Password Successfully changed");
             p.enableMe();
             dispose();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void pressButton() {
+        try{
+            userName = cnameFrame.getText();
+            password = new String(cpassFrame.getPassword());
+            auth.setString(1, userName);
+            auth.setString(2, password);
+            
+            ResultSet rs = auth.executeQuery();
+            if(rs.next()){
+                Success();
+            }
+            else{
+            JOptionPane.showMessageDialog(this, "Invalid Username or password");
+            nameFrame.setText("");
+            passFrame.setText("");
+            cnameFrame.setText("");
+            cpassFrame.setText("");
+            }
+            
         }catch(Exception e){
             e.printStackTrace();
         }

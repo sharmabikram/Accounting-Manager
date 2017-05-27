@@ -219,8 +219,8 @@ public class UpdateStaff extends javax.swing.JFrame {
             //System.out.println(b);
             addressFrame.setText(address);
             phoneFrame.setText(phone);
-            hRateFrame.setText(Float.toString(fRate));
-            fRateFrame.setText(Float.toString(hRate));
+            hRateFrame.setText(Float.toString(hRate));
+            fRateFrame.setText(Float.toString(fRate));
             
             
             //BufferedImage im = ImageIO.read(in);
