@@ -5,16 +5,24 @@
  */
 package accounting.manager;
 
-import java.awt.Dialog;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import javafx.scene.paint.Color;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -37,7 +45,7 @@ public class AddNewStock extends javax.swing.JFrame {
         try{
             //ConnectionObject.myConn.openConnection();
             conn = ConnectionObject.myConn.getConnection();
-            stmt = conn.prepareStatement("insert into stock (itemName, price, quantity) values(?, ?, ?)");
+            stmt = conn.prepareStatement("insert into stock (itemName, price, quantity, photo) values(?, ?, ?, ?)");
             profitStmt = conn.prepareStatement("insert into profitTable values(?, ?, ?)");
         }catch(Exception e){
             System.out.println("bug in add stock er");
@@ -52,7 +60,7 @@ public class AddNewStock extends javax.swing.JFrame {
                     parent.enableMe();
                 }
             });
-        
+        photoFrame.setIcon(new ImageIcon(getClass().getResource("/extras/item.jpg")));
     }
 
     
@@ -71,6 +79,9 @@ public class AddNewStock extends javax.swing.JFrame {
         addMore = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         costPrice = new javax.swing.JTextField();
+        photoFrame = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ADD AN ITEM");
@@ -132,42 +143,63 @@ public class AddNewStock extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Item Image");
+
+        jButton1.setText("Browse");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(radioL)
-                    .addComponent(radioP))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(costPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(addMore, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(68, 68, 68))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(photoFrame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1))
+                            .addComponent(name, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(radioL)
+                            .addComponent(radioP))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(costPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                        .addComponent(addMore, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -181,7 +213,15 @@ public class AddNewStock extends javax.swing.JFrame {
                             .addComponent(amt, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(costPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(addMore))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(photoFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jButton1)))
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -222,17 +262,24 @@ public class AddNewStock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_costPriceActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        uploadPic();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addMore;
     private javax.swing.JTextField amt;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField costPrice;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField name;
+    private javax.swing.JLabel photoFrame;
     private javax.swing.JRadioButton radioL;
     private javax.swing.JRadioButton radioP;
     // End of variables declaration//GEN-END:variables
@@ -252,8 +299,17 @@ public class AddNewStock extends javax.swing.JFrame {
            stmt.setString(1, itemName);
            stmt.setFloat(2, price);
            stmt.setFloat(3, qty);
-           stmt.executeUpdate();
            
+           FileInputStream fin;
+            if(image == null){
+                image = new File("C:\\Program Files\\RKS_ACC\\item.jpg");
+                fin=new FileInputStream("C:\\Program Files\\RKS_ACC\\item.jpg");
+            }
+           else
+            fin=new FileInputStream(image.getAbsolutePath());
+            stmt.setBinaryStream(4, fin, fin.available());
+            stmt.executeUpdate();
+            
            profitStmt.setString(1, itemName);
            profitStmt.setFloat(2, 0);
            profitStmt.setFloat(3, 0);
@@ -270,8 +326,58 @@ public class AddNewStock extends javax.swing.JFrame {
         costPrice.setText("");
         radioL.setSelected(false);
         radioP.setSelected(false);
+        photoFrame.setIcon(new ImageIcon(getClass().getResource("/extras/pass.jpg")));
         JOptionPane.showMessageDialog(this,"Item Sucessfully added" );
     }
     
+    private void uploadPic() {
+        JFileChooser chooser;
+        FileNameExtensionFilter filter;
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(image);
+        filter = new FileNameExtensionFilter("jpeg, gif and png files", "jpg", "gif", "png");
+        chooser.addChoosableFileFilter(filter);
+ 
+        int i = chooser.showOpenDialog(this);
+        if (i == JFileChooser.APPROVE_OPTION) {
+            image = chooser.getSelectedFile();
+            
+            //jLabel2.setText(image.getAbsolutePath());
+            try {
+                BufferedImage originalImage = ImageIO.read(image);
+                int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+ 
+                BufferedImage resizeImageJpg = resizeImage(originalImage, type);
+                photo = new ImageIcon(toImage(resizeImageJpg));
+ 
+                //converting buffered image to byte array
+                raster = resizeImageJpg.getRaster();
+                data = (DataBufferByte) raster.getDataBuffer();
+ 
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+    }
+        photoFrame.setIcon(photo);
+    }
+    
+    public Image toImage(BufferedImage bufferedImage) {
+        return Toolkit.getDefaultToolkit().createImage(bufferedImage.getSource());
+    }
+    
+    private static BufferedImage resizeImage(BufferedImage originalImage, int type) {
+        BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
+        g.dispose();
+ 
+        return resizedImage;
+    }
+    ImageIcon photo;
+    WritableRaster raster;
+    DataBufferByte data;
+    File image;
+     private static final int IMG_WIDTH = 100;
+    private static final int IMG_HEIGHT = 100;
    
 }

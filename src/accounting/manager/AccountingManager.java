@@ -55,7 +55,7 @@ public class AccountingManager {
             ConnectionObject.myConn.openConnection();
             conn = ConnectionObject.myConn.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("create table if not exists stock(id int auto_increment primary key, itemName varchar(40), price float, quantity float)");
+            stmt.execute("create table if not exists stock(id int auto_increment primary key, itemName varchar(40), price float, quantity float, photo longblob)");
             stmt.execute("create table if not exists profitTable(itemName varchar(40), profit float, qty_sold float)");
             stmt.execute("create table if not exists profitMonth(itemName varchar(40), profit float, month char(5), year int, qty_sold float)");
             stmt.execute("create table if not exists currMonth(month char(5), curyear int, netSell float)");
