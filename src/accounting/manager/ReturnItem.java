@@ -24,7 +24,7 @@ import javax.swing.event.DocumentListener;
  */
 public class ReturnItem extends javax.swing.JFrame {
 
-    private PreparedStatement prev, curr, update, prevProfit, currProfit, updateCurr, updatePrev, getSell, updateSell, updateStk;
+    private PreparedStatement prev, curr, update, prevProfit, currProfit, updateCurr, updatePrev, getSell, updateSell, updateStk, getCurrSell, updateCurrSell;
     private Connection conn;
     private int mnth, yr;
     private String[] defaultValues = {"select"};
@@ -50,11 +50,12 @@ public class ReturnItem extends javax.swing.JFrame {
             prevProfit = conn.prepareStatement("select profit from profitmonth where itemName = ? and month = ? and year = ?");
             currProfit = conn.prepareStatement("select profit from profittable where itemName = ?");
             getSell = conn.prepareStatement("select selling from sell where month = ? and year = ?");
+            getCurrSell = conn.prepareStatement("select netSell from currmonth");
             
             updateCurr = conn.prepareStatement("update profittable set qty_sold = ? , profit = ? where itemName = ?");
             updatePrev = conn.prepareStatement("update profitmonth set qty_sold = ? , profit = ? where itemName = ? and month = ? and year = ?");
             updateSell = conn.prepareStatement("update sell set selling = ? where month = ? and year = ?");
-            
+            updateCurrSell = conn.prepareStatement("update currmonth set netSell = ?");
             updateStk = conn.prepareStatement("update stock set quantity = ? where itemName = ?");
         }catch(Exception e){
             e.printStackTrace();
@@ -413,6 +414,14 @@ public class ReturnItem extends javax.swing.JFrame {
                 updateCurr.setFloat(2, profit);
                 updateCurr.setString(3, selected);
                 updateCurr.executeUpdate();
+                
+                rs = getCurrSell.executeQuery();
+                if(rs.next()){
+                    sell = rs.getFloat("netSell");
+                }
+                sell = sell - price;
+                updateCurrSell.setFloat(1, sell);
+                updateCurrSell.executeUpdate();
                 
             }else{  // adjust profittable
                 prevProfit.setString(1, selected);

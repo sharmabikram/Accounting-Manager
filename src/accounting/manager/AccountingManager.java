@@ -48,10 +48,10 @@ public class AccountingManager {
     private void init() {
         try{
             Statement stmt = conn.createStatement();
-            stmt.execute("create database if not exists ramkumar");
+            stmt.execute("create database if not exists ramkumarTemp");
             ConnectionObject.myConn.closeConnection();
             
-            ConnectionObject.myConn.changeURL("jdbc:mysql://localhost/ramkumar");
+            ConnectionObject.myConn.changeURL("jdbc:mysql://localhost/ramkumarTemp");
             ConnectionObject.myConn.openConnection();
             conn = ConnectionObject.myConn.getConnection();
             stmt = conn.createStatement();
