@@ -291,7 +291,7 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, 82, -1));
-        getContentPane().add(photoFrame, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 100, 100));
+        getContentPane().add(photoFrame, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 290, 230));
 
         jMenu1.setText("Menu");
 
@@ -768,6 +768,6 @@ public class MainPage extends javax.swing.JFrame {
         return resizedImage;
     }
     
-    private static final int IMG_WIDTH = 100;
-    private static final int IMG_HEIGHT = 100;
+    private static final int IMG_WIDTH = 300;
+    private static final int IMG_HEIGHT = 300;
 }
