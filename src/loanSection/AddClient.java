@@ -76,11 +76,15 @@ public class AddClient extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        photoFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
         addressFrame.setColumns(20);
         addressFrame.setRows(5);
+        addressFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jScrollPane1.setViewportView(addressFrame);
 
         browseFrame.setText("Browse");
+        browseFrame.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         browseFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 browseFrameActionPerformed(evt);
@@ -90,6 +94,7 @@ public class AddClient extends javax.swing.JFrame {
         jLabel1.setText("Name");
 
         joinButton.setText("Join");
+        joinButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         joinButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 joinButtonActionPerformed(evt);
@@ -100,6 +105,7 @@ public class AddClient extends javax.swing.JFrame {
 
         jLabel4.setText("Address");
 
+        nameFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         nameFrame.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 nameFrameFocusGained(evt);
@@ -113,6 +119,8 @@ public class AddClient extends javax.swing.JFrame {
                 nameFrameActionPerformed(evt);
             }
         });
+
+        phoneFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,7 +172,7 @@ public class AddClient extends javax.swing.JFrame {
                         .addComponent(photoFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(browseFrame)))
-                .addGap(0, 95, Short.MAX_VALUE))
+                .addGap(0, 107, Short.MAX_VALUE))
         );
 
         pack();

@@ -103,6 +103,7 @@ public class LoanManager extends javax.swing.JFrame {
         dateFrame.setText("Date");
 
         historyButton.setText("Payment history");
+        historyButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         historyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 historyButtonActionPerformed(evt);
@@ -110,6 +111,7 @@ public class LoanManager extends javax.swing.JFrame {
         });
 
         addButton.setText("Add a new Client");
+        addButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
@@ -117,6 +119,7 @@ public class LoanManager extends javax.swing.JFrame {
         });
 
         payButton.setText("Pay");
+        payButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         payButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 payButtonActionPerformed(evt);
@@ -135,6 +138,7 @@ public class LoanManager extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         detailButton.setText("Get Client Details");
+        detailButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         detailButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 detailButtonActionPerformed(evt);
@@ -142,6 +146,7 @@ public class LoanManager extends javax.swing.JFrame {
         });
 
         receiveButton.setText("Receive");
+        receiveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         receiveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 receiveButtonActionPerformed(evt);
@@ -149,6 +154,7 @@ public class LoanManager extends javax.swing.JFrame {
         });
 
         jButton1.setText("Profit");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

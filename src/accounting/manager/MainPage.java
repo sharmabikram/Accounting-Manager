@@ -161,6 +161,7 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nameFrame.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        nameFrame.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         nameFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameFrameActionPerformed(evt);
@@ -195,6 +196,8 @@ public class MainPage extends javax.swing.JFrame {
         jLabel4.setText("Quantity");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 67, 28));
 
+        stockFrame.setEditable(false);
+        stockFrame.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         stockFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stockFrameActionPerformed(evt);
@@ -205,6 +208,7 @@ public class MainPage extends javax.swing.JFrame {
         jLabel5.setText("Price");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 130, 82, 28));
 
+        priceFrame.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         priceFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priceFrameActionPerformed(evt);
@@ -212,7 +216,9 @@ public class MainPage extends javax.swing.JFrame {
         });
         getContentPane().add(priceFrame, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 160, 82, 45));
 
+        jList1.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 51), 1, true)));
         jList1.setModel(createDefaultListModel());
+        jList1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jList1.setVisibleRowCount(20);
         jList1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -224,6 +230,7 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 251, 308));
 
         jButton2.setText("add");
+        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -233,6 +240,7 @@ public class MainPage extends javax.swing.JFrame {
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        sellingTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         sellingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -249,6 +257,7 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(911, 54, 382, 480));
 
         jButton3.setText("Print");
+        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -259,6 +268,7 @@ public class MainPage extends javax.swing.JFrame {
         jLabel6.setText("Qty type");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 67, 28));
 
+        qtyFrame.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         qtyFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 qtyFrameActionPerformed(evt);
@@ -270,6 +280,7 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(911, 34, 65, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/extras/refresh.jpeg"))); // NOI18N
+        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -278,6 +289,7 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1257, 11, 36, -1));
 
         jButton4.setText("done");
+        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -286,17 +298,21 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 280, 82, -1));
 
         jButton5.setText("remove");
+        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, 82, -1));
+
+        photoFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
         getContentPane().add(photoFrame, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 300, 300));
 
         jMenu1.setText("Menu");
 
         jMenuItem1.setText("Add New Item");
+        jMenuItem1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -305,6 +321,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Update Stock");
+        jMenuItem2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -313,6 +330,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem5.setText("Return Item");
+        jMenuItem5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -321,6 +339,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenu1.add(jMenuItem5);
 
         StatementDB.setText("Statement");
+        StatementDB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         StatementDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StatementDBActionPerformed(evt);
@@ -329,6 +348,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenu1.add(StatementDB);
 
         checkStock.setText("Stock");
+        checkStock.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         checkStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkStockActionPerformed(evt);
@@ -337,6 +357,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenu1.add(checkStock);
 
         jMenuItem4.setText("Change password");
+        jMenuItem4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -349,6 +370,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenu2.setText("Management");
 
         jMenuItem3.setText("Staff Management");
+        jMenuItem3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -357,6 +379,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenu2.add(jMenuItem3);
 
         jMenuItem6.setText("Loan Section");
+        jMenuItem6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);

@@ -120,6 +120,11 @@ public class ReturnModule extends javax.swing.JFrame {
         jLabel4.setText("Amount Refunded");
 
         goReturn.setText("Return");
+        goReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goReturnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,6 +218,10 @@ public class ReturnModule extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(this, "Please select a month");
     }//GEN-LAST:event_searchActionPerformed
+
+    private void goReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goReturnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_goReturnActionPerformed
 
    
 

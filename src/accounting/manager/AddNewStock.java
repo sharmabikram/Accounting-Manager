@@ -99,6 +99,7 @@ public class AddNewStock extends javax.swing.JFrame {
         jLabel3.setText("Quantity");
 
         name.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        name.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameActionPerformed(evt);
@@ -121,6 +122,7 @@ public class AddNewStock extends javax.swing.JFrame {
             }
         });
 
+        amt.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         amt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 amtActionPerformed(evt);
@@ -128,6 +130,7 @@ public class AddNewStock extends javax.swing.JFrame {
         });
 
         addMore.setText("Add More");
+        addMore.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         addMore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addMoreActionPerformed(evt);
@@ -137,15 +140,19 @@ public class AddNewStock extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Price");
 
+        costPrice.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         costPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 costPriceActionPerformed(evt);
             }
         });
 
+        photoFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+
         jLabel5.setText("Item Image");
 
         jButton1.setText("Browse");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

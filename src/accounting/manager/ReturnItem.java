@@ -99,12 +99,14 @@ public class ReturnItem extends javax.swing.JFrame {
         pMnth.setText("Previous Month Sale");
 
         jButton1.setText("Show ");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        nameFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         nameFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameFrameActionPerformed(evt);
@@ -113,10 +115,13 @@ public class ReturnItem extends javax.swing.JFrame {
 
         jLabel3.setText("Item Name to be returned");
 
+        qtyFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
         jLabel4.setText("Qty");
 
         jLabel5.setText("Price");
 
+        priceFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         priceFrame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priceFrameActionPerformed(evt);
@@ -124,6 +129,7 @@ public class ReturnItem extends javax.swing.JFrame {
         });
 
         jButton2.setText("Return");
+        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -133,7 +139,9 @@ public class ReturnItem extends javax.swing.JFrame {
         jLabel6.setText("Sold Qty");
 
         sQtyFrame.setEditable(false);
+        sQtyFrame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
+        jList1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jList1.setModel(createDefaultListModel());
         jList1.setVisibleRowCount(20);
         jList1.addMouseListener(new java.awt.event.MouseAdapter() {
