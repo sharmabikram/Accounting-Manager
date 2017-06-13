@@ -6,9 +6,7 @@
 package staffManagement;
 
 import accounting.manager.ConnectionObject;
-import accounting.manager.Item;
 import accounting.manager.MainPage;
-import static accounting.manager.MainPage.items;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
@@ -292,13 +290,17 @@ public class StaffMain extends javax.swing.JFrame {
         try{
             String name = nameFrame.getText();
             float amt = Float.parseFloat(amountFrame.getText());
-            if(amt<=0){
+            if(amt <=0){
+                JOptionPane.showMessageDialog(this, "Payment can't be negative or zero");
+                clearAll();
                 return ;
             }
             adjustDetail(name, amt);
         }catch(Exception e){
             e.printStackTrace();
         }
+        clearAll();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
@@ -377,7 +379,7 @@ public class StaffMain extends javax.swing.JFrame {
    private void getDetails() {
         
         try{
-            ResultSet result = stmt.executeQuery("Select * from staffDetail order by sname");
+            ResultSet result = stmt.executeQuery("Select sname, phone, address, rateh, ratef, amtDue from staffDetail order by sname");
             defaultValues = new String[0];
             if(result.last()){
                 staffCount = result.getRow();
@@ -470,6 +472,7 @@ public class StaffMain extends javax.swing.JFrame {
             money.setString(1, name);
             money.setFloat(2, amt);
             money.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Payment Successfully made");
         } catch (SQLException ex) {
             Logger.getLogger(StaffMain.class.getName()).log(Level.SEVERE, null, ex);
         }

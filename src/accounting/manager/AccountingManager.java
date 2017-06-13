@@ -5,6 +5,11 @@
  */
 package accounting.manager;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,13 +18,18 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JWindow;
 import staffManagement.staffEntry;
 
 /**
  *
  * @author lenovo
  */
-public class AccountingManager {
+public class AccountingManager extends JWindow{
 
     //static MainPage mainFrame;
     Connection conn;
@@ -27,31 +37,67 @@ public class AccountingManager {
     MainPage mainFrame;
     staffEntry s;
     
+    public AccountingManager(){
+        JPanel content = (JPanel)getContentPane();
+    content.setBackground(Color.white);
+
+    // Set the window's bounds, centering the window
+    int width = 590;
+    int height =370;
+    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    int x = (screen.width-width)/2;
+    int y = (screen.height-height)/2;
+    setBounds(x,y,width+70,height);
+
+    // Build the splash screen
+    JLabel label = new JLabel();
+    label.setIcon(new ImageIcon(getClass().getResource("/extras/giflogo.gif")));
+    
+    JLabel copyrt = new JLabel
+      ("RKS Accounts", JLabel.CENTER);
+    copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
+    content.add(label, BorderLayout.CENTER);
+    content.add(copyrt, BorderLayout.SOUTH);
+    Color oraRed = new Color(156, 20, 20,  255);
+    content.setBorder(BorderFactory.createLineBorder(oraRed, 10));
+
+    // Display it
+    setVisible(true);
+    // Wait a little while, maybe while loading resources
+    
+
+    
+    }
+    
     public static void main(String[] args) {
         AccountingManager driverObject = new AccountingManager();
         
+       
         ConnectionObject.myConn.openConnection();
         driverObject.conn = ConnectionObject.myConn.getConnection();
         
         driverObject.init();
+        try { Thread.sleep(10000); } catch (Exception e) {}
+        driverObject.dispose();
         driverObject.mainFrame = new MainPage();
+        driverObject.setVisible(false);
         driverObject.mainFrame.setVisible(true);
-        try {
+        /*try {
             driverObject.checkTrail();
            
         } catch (Exception ex) {
             Logger.getLogger(AccountingManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
        
     }
 
     private void init() {
         try{
             Statement stmt = conn.createStatement();
-            stmt.execute("create database if not exists ramkumarTemp");
+            stmt.execute("create database if not exists ramkumar");
             ConnectionObject.myConn.closeConnection();
             
-            ConnectionObject.myConn.changeURL("jdbc:mysql://localhost/ramkumarTemp");
+            ConnectionObject.myConn.changeURL("jdbc:mysql://localhost/ramkumar");
             ConnectionObject.myConn.openConnection();
             conn = ConnectionObject.myConn.getConnection();
             stmt = conn.createStatement();
@@ -88,13 +134,14 @@ public class AccountingManager {
             if(!rs.next()){
                 stmt.execute("insert into buyme values('f', 'SBIKRAM_ACCOUNT_2017', 'f')");
             }
-            
+            stmt.execute("create table if not exists cdetail(cname varchar(30) primary key, phone char(11), address varchar(80), photo mediumblob)");
+            stmt.execute("create table if not exists cmoneydetail(cname varchar(30), amount float, tarik dateTime)");
+            stmt.execute("create table if not exists cprofit (cname varchar(30), profit float, month char(5), year int)");
         }catch(Exception e){
             e.printStackTrace();
         }
      }
-
-    private void checkTrail() throws Exception{
+/* private void checkTrail() throws Exception{
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("select * from buyme");
         String buy, expire;
@@ -120,5 +167,6 @@ public class AccountingManager {
           //  System.out.println("here");
             stmt.execute("update buyme set expire = \"t\"");
         }
-    }  
+    }  */
+   
 }

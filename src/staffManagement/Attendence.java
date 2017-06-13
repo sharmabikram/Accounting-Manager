@@ -157,7 +157,7 @@ public class Attendence extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int mnth = monthBox.getSelectedIndex();
         mnth++;
-        
+        Object row[] = new Object[3];
         int count = 0;
         String yr = yearBox.getSelectedItem().toString();
         int year = 2000+Integer.parseInt(yr);
@@ -173,8 +173,10 @@ public class Attendence extends javax.swing.JFrame {
             while(rs.next()){
                 date = rs.getDate("tarik");
                 type = rs.getString("type");
-                
-                addRow.addRow(new Object[]{++count, date, type});
+                row[0] = ++count;
+                row[1] = date;
+                row[2] = type;
+                addRow.addRow(row);
                 
             }
         }catch(Exception e){

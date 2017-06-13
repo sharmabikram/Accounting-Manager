@@ -148,10 +148,15 @@ public class Password extends javax.swing.JFrame {
             StatementDB stObj = new StatementDB(p); 
             stObj.setVisible(true);
         }
-        else{
+        else if(num == 2){
             StaffMain staff = new StaffMain(p);
             staff.setVisible(true);
             p.setVisible(false);
+        }
+        else{
+            loanSection.LoanManager m = new loanSection.LoanManager(p);
+            m.setVisible(true);
+            p.setVisible(false); 
         }
        dispose();
     }

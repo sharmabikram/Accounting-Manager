@@ -374,11 +374,16 @@ public class StatementDB extends javax.swing.JFrame {
             DefaultTableModel addRow =  (DefaultTableModel)profitTable.getModel();
             addRow.setRowCount(itemCount);
             rs = st.executeQuery();
+            Object row[] = new Object[4];
             while(rs.next()){
                 item = rs.getString("itemName");
                 profit = rs.getFloat("profit");
                 qty_sold = rs.getFloat("qty_sold");
-                addRow.addRow(new Object[] {itemCount+1, item, qty_sold, profit});
+                row[0] = itemCount+1;
+                row[1] = item;
+                row[2] = qty_sold;
+                row[3] = profit;
+                addRow.addRow(row);
                 itemCount++;
             }
             

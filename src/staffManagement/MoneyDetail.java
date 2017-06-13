@@ -161,6 +161,7 @@ public class MoneyDetail extends javax.swing.JFrame {
         float amt;
         DefaultTableModel addRow =  (DefaultTableModel)historyTable.getModel();
         addRow.setRowCount(itemCount);
+        Object row[] = new Object[2];
         try{
             stmt.setString(1, name);
             stmt.setInt(2, mnth);
@@ -171,8 +172,9 @@ public class MoneyDetail extends javax.swing.JFrame {
                date = rs.getDate("tarik");
                amt = rs.getFloat("amount");
                total += amt;
-               System.out.println(amt);
-               addRow.addRow(new Object[]{date, amt});
+               row[0] = date;
+               row[1] = amt;
+               addRow.addRow(row);
                
             }
             totalFrame.setText(Float.toString(total));

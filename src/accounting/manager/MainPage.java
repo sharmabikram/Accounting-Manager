@@ -150,6 +150,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RKS Accounts");
@@ -291,7 +292,7 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, 82, -1));
-        getContentPane().add(photoFrame, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 290, 230));
+        getContentPane().add(photoFrame, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 300, 300));
 
         jMenu1.setText("Menu");
 
@@ -345,7 +346,7 @@ public class MainPage extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Staff Management");
+        jMenu2.setText("Management");
 
         jMenuItem3.setText("Staff Management");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -354,6 +355,14 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem3);
+
+        jMenuItem6.setText("Loan Section");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
 
@@ -428,6 +437,7 @@ public class MainPage extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(counter == 0)
             return;
+        sellItems();
         DefaultTableModel model = (DefaultTableModel) sellingTable.getModel();
         generateInvoice(model, totalPayment);
         //JOptionPane.showMessageDialog(this,"Receive Payment .. Rs "+totalPayment );
@@ -499,33 +509,9 @@ public class MainPage extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
          if(counter == 0)
             return;
+        sellItems();
         DefaultTableModel model = (DefaultTableModel) sellingTable.getModel();
-        // fetch the detail
-        Object d1, d2, d3;
-        String name = null;
-        float qty=0, sp=0;
-        float payment=0;
-        for(int i = 0; i<model.getRowCount(); ++i){
-            d1 = model.getValueAt(i, 1);
-            d2 = model.getValueAt(i, 2);
-            d3 = model.getValueAt(i, 3);
-            
-            name = (String)d1;
-            qty = (float)d2;
-            sp = (float)d3;
-            
-            payment += sp;
-            
-            adjustStock(name, qty, sp);
-        }
         model.setRowCount(0);
-        //generateInvoice(model, totalPayment);
-        JOptionPane.showMessageDialog(this,"Receive Payment .. Rs "+payment );
-        counter = 0;
-        totalPayment = 0;
-        
-        //model.setRowCount(counter);
-        clearAll();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -542,6 +528,12 @@ public class MainPage extends javax.swing.JFrame {
         obj.setVisible(true);
         setEnabled(false);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        Password pass = new Password(this, 3);
+        pass.setVisible(true);
+        setEnabled(false); 
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
      
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -568,6 +560,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -652,6 +645,7 @@ public class MainPage extends javax.swing.JFrame {
         qtyFrame.setText("");
         radioL.setSelected(false);
         radioP.setSelected(false);
+        
     }
     
     private void closeConnection(){
@@ -770,4 +764,33 @@ public class MainPage extends javax.swing.JFrame {
     
     private static final int IMG_WIDTH = 300;
     private static final int IMG_HEIGHT = 300;
+
+    private void sellItems() {
+DefaultTableModel model = (DefaultTableModel) sellingTable.getModel();
+        // fetch the detail
+        Object d1, d2, d3;
+        String name = null;
+        float qty=0, sp=0;
+        float payment=0;
+        for(int i = 0; i<model.getRowCount(); ++i){
+            d1 = model.getValueAt(i, 1);
+            d2 = model.getValueAt(i, 2);
+            d3 = model.getValueAt(i, 3);
+            
+            name = (String)d1;
+            qty = (float)d2;
+            sp = (float)d3;
+            
+            payment += sp;
+            
+            adjustStock(name, qty, sp);
+        }
+        
+        //generateInvoice(model, totalPayment);
+        JOptionPane.showMessageDialog(this,"Receive Payment .. Rs "+payment );
+        counter = 0;
+        totalPayment = 0;
+        
+        //model.setRowCount(counter);
+        clearAll();    }
 }

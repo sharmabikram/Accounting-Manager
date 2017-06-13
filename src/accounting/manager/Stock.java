@@ -186,6 +186,7 @@ public class Stock extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void updateTableContent() {
+        Object row[] = new Object[4];
         DefaultTableModel model = (DefaultTableModel)stockTable.getModel();
         int id;
         float totalValue = 0;
@@ -198,7 +199,11 @@ public class Stock extends javax.swing.JFrame {
             cost = MainPage.items[i-1].costPrice;
             qty = MainPage.items[i-1].quantity;
             totalValue += cost*qty;
-            model.addRow(new Object[] {id, name, cost, qty});
+            row[0] = id;
+            row[1] = name;
+            row[2] = cost;
+            row[3] = qty;
+            model.addRow(row);
         }
         
         totalAmt.setText(Float.toString(totalValue));
