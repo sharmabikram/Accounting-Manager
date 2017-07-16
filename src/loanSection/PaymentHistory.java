@@ -25,10 +25,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PaymentHistory extends javax.swing.JFrame {
 
+    java.sql.Date startDate, endDate;
     private String gName ;
     private PreparedStatement stmt, updatePro, remove, remove1;
     private Connection conn;
-    private float profit =0;
+    private float profit =0, invested = 0;
     public PaymentHistory(LoanManager parent, String name) {
         gName = name;
         initComponents();
@@ -50,7 +51,7 @@ public class PaymentHistory extends javax.swing.JFrame {
         try{
             conn = ConnectionObject.myConn.getConnection();
             stmt = conn.prepareStatement("select amount, tarik from cmoneydetail where cname = ? order by tarik");
-            updatePro = conn.prepareStatement("insert into cprofit values(?, ?, ?, ?)");
+            updatePro = conn.prepareStatement("insert into cprofit values(?, ?, ?, ?, ?)");
             remove = conn.prepareStatement("delete from cdetail where cname = ?");
             remove1 = conn.prepareStatement("delete from cmoneydetail  where cname = ?");
             showDetails();
@@ -192,6 +193,14 @@ public class PaymentHistory extends javax.swing.JFrame {
         float amt=0, given=0, taken=0;
         stmt.setString(1, gName);
         ResultSet rs = stmt.executeQuery();
+        // get the first and the last date
+        if(rs.next()){  
+            startDate = rs.getDate("tarik");
+            if(rs.last())
+                endDate = rs.getDate("tarik");
+            rs.beforeFirst();
+        }
+        
         DefaultTableModel addRow =  (DefaultTableModel)historyTable.getModel();
         addRow.setRowCount(0);
         while(rs.next()){
@@ -212,6 +221,7 @@ public class PaymentHistory extends javax.swing.JFrame {
             addRow.addRow(row);
             
         }
+        invested = given;
         profit = taken - given;
         invest.setText(Float.toString(given));
         receive.setText(Float.toString(taken));
@@ -228,9 +238,10 @@ public class PaymentHistory extends javax.swing.JFrame {
         String mnth = accounting.manager.Month.month[m];
         try{
             updatePro.setString(1, gName);
-            updatePro.setFloat(2, profit);
-            updatePro.setString(3, mnth);
-            updatePro.setInt(4, year);
+            updatePro.setFloat(2, invested);
+            updatePro.setFloat(3, profit);
+            updatePro.setDate(4, startDate);
+            updatePro.setDate(5, endDate);
             updatePro.executeUpdate();
             
             remove.setString(1, gName);

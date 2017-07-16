@@ -133,6 +133,12 @@ public class Stock extends javax.swing.JFrame {
 
         jLabel2.setText("Enter word to match");
 
+        jtfFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfFilterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,6 +176,10 @@ public class Stock extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtfFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfFilterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfFilterActionPerformed
 
     /**
      * @param args the command line arguments

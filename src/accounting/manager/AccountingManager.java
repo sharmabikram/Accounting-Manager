@@ -94,10 +94,10 @@ public class AccountingManager extends JWindow{
     private void init() {
         try{
             Statement stmt = conn.createStatement();
-            stmt.execute("create database if not exists ramkumar");
+            stmt.execute("create database if not exists ramkumartest");
             ConnectionObject.myConn.closeConnection();
             
-            ConnectionObject.myConn.changeURL("jdbc:mysql://localhost/ramkumar");
+            ConnectionObject.myConn.changeURL("jdbc:mysql://localhost/ramkumarTest");
             ConnectionObject.myConn.openConnection();
             conn = ConnectionObject.myConn.getConnection();
             stmt = conn.createStatement();
@@ -129,19 +129,20 @@ public class AccountingManager extends JWindow{
             stmt.execute("create table if not exists sell(month char(5), year int, selling float)");
             stmt.execute("CREATE TABLE if not EXISTS staffDetail(sname varchar(20), phone char(11), rateh float, ratef float, address varchar(70), amtDue float, image longblob)");
             stmt.execute("CREATE TABLE if not EXISTS moneydetail (sname varchar(20), amount float, tarik dateTime)");
-            stmt.execute("CREATE TABLE IF NOT EXISTS buyme(buy char(1), pkey char(20), expire char(1))");
-            rs = stmt.executeQuery("select * from buyme");
-            if(!rs.next()){
-                stmt.execute("insert into buyme values('f', 'SBIKRAM_ACCOUNT_2017', 'f')");
-            }
+            
             stmt.execute("create table if not exists cdetail(cname varchar(30) primary key, phone char(11), address varchar(80), photo mediumblob)");
             stmt.execute("create table if not exists cmoneydetail(cname varchar(30), amount float, tarik dateTime)");
-            stmt.execute("create table if not exists cprofit (cname varchar(30), profit float, month char(5), year int)");
+            stmt.execute("create TABLE if not EXISTS cprofit (cname varchar(25), invested float, profit float, startDate dateTime, endDate dateTime)");
         }catch(Exception e){
             e.printStackTrace();
         }
      }
 /* private void checkTrail() throws Exception{
+    stmt.execute("CREATE TABLE IF NOT EXISTS buyme(buy char(1), pkey char(20), expire char(1))");
+            rs = stmt.executeQuery("select * from buyme");
+            if(!rs.next()){
+                stmt.execute("insert into buyme values('f', 'SBIKRAM_ACCOUNT_2017', 'f')");
+            }
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("select * from buyme");
         String buy, expire;
